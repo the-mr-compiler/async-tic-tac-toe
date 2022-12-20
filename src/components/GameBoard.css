@@ -1,0 +1,25 @@
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-gap: 5px;
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
+}
+
+.square {
+  background-color: #fff;
+  font-size: 5em;
+  text-align: center;
+  line-height: 60px;
+  max-height: 100px;
+}
+
+button[disabled] {
+  background-color: #ccc;
+}
+
+.cursor-not-allowed {
+  cursor: not-allowed;
+}
