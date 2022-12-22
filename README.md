@@ -1,70 +1,51 @@
-# Getting Started with Create React App
+# Async Tic-Tac-Toe
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a simple tic-tac-toe game built with [React](https://reactjs.org/) and [Firebase](https://firebase.google.com/). It allows users to play tic-tac-toe against each other in real-time, using Firebase's firestore database to keep the game state synced between players.
 
-## Available Scripts
+## Prerequisites
 
-In the project directory, you can run:
+Before you can run this project, you'll need to have the following software installed on your computer:
 
-### `npm start`
+- [Node.js](https://nodejs.org/)
+- [npm](https://www.npmjs.com/) (should come with Node.js)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Getting Started
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+To get started, follow these steps:
 
-### `npm test`
+1.  Clone this repository to your local machine using `git clone https://github.com/the-mr-compiler/async-tic-tac-toe.git`.
+2.  Navigate to the project directory and install the dependencies by running `npm install`.
+3.  Create a new Firebase project and get your Firebase config by following the steps in the next section.
+4.  In src `src/firebase/firebase.js` change the firebaseConfig object with new firebase config from previous section
+5.  Run the project in development mode by running `npm start`. This will start a local development server and open the game in your default web browser.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Creating a New Firebase Project
 
-### `npm run build`
+To create a new Firebase project and get your Firebase config:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1.  Go to the [Firebase console](https://console.firebase.google.com/).
+2.  Click the "Add project" button.
+3.  Give your project a name and click "Continue".
+4.  Enable the "Google Analytics" for your project and click "Create project".
+5.  Click the "Web" icon to set up a new web app for your project.
+6.  Give your app a nickname and click "Register app".
+7.  Copy the Firebase config object from the Firebase console and use it to replace the firebaseConfig in `src/firebase/firebase.js` file as described in the previous section.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Deploying to Production
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+To build and deploy the production version of the app, run the following command:
 
-### `npm run eject`
+Copy code
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+`npm run build`
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+This will create a production-ready build of the app in the `build` folder. You can then serve the app using any static file server, such as [Firebase Hosting](https://firebase.google.com/docs/hosting/).
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Built With
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- [React](https://reactjs.org/)
+- [Firebase](https://firebase.google.com/)
 
-## Learn More
+## Author
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[Meghanath Nalawade](https://github.com/the-mr-compiler)
