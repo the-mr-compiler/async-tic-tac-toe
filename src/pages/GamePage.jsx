@@ -74,7 +74,7 @@ export default function GamePage() {
     const stat = checkWin();
     if (stat !== null) {
       if (stat) updateStatus(gameid, status.complete, currentUser.email);
-      else updateStatus(gameid, status.complete, opponent);
+      else updateStatus(gameid, status.complete, opponentEmail);
       return;
     }
     if (newBoardValues.filter((v) => v === "").length === 0) {
@@ -124,11 +124,7 @@ export default function GamePage() {
           <div className="h1 w-75">Game with {opponent}</div>
           <div className="mt-1 ">Your piece</div>
           <div className="p-3">
-            {owner === currentUser.uid ? (
-              <img src={xIcon} alt="X" />
-            ) : (
-              <img src={oIcon} alt="O" />
-            )}
+            <img src={xIcon} alt="X" />
           </div>
           <div className="flex-grow-1">
             <div className="bg-warning bg-opacity-25">
@@ -138,6 +134,7 @@ export default function GamePage() {
               {board && (
                 <GameBoard
                   board={newBoardValues}
+                  xOwner={owner === currentUser.uid}
                   handleClick={!disabled ? handleClick : null}
                   disabled={disabled}
                 />
