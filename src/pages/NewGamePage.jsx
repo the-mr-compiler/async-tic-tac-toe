@@ -21,7 +21,7 @@ export default function NewGamePage() {
       }, 3000);
       return;
     }
-    newGame(currentUser.uid, currentUser.email, email).then((resp) => {
+    newGame(currentUser.email, currentUser.email, email).then((resp) => {
       if (resp === null) {
         setError("Enter correct details.");
         setTimeout(() => {

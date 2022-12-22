@@ -57,38 +57,74 @@ async function getUser(uid) {
   }
 }
 
-export function getGamesSnapshot(email, callback) {
+export function getGamesSnapshot(email, callback, callbackOpp) {
   const q = query(
     collection(db, "games"),
-    where("users", "array-contains", email),
+    where("user", "==", email),
     orderBy("updatedAt", "desc")
   );
-  return onSnapshot(q, (snapshot) => {
+  const first = onSnapshot(q, (snapshot) => {
     const games = snapshot.docs.map((doc) => {
       let d = doc.data();
-      let opponent = d.users.filter((u) => u !== email)[0];
+      let opponent = d.opponent === email ? d.user : d.opponent;
       return { ...d, id: doc.id, opponent };
     });
     callback(games);
   });
+  const q2 = query(
+    collection(db, "games"),
+    where("opponent", "==", email),
+    orderBy("updatedAt", "desc")
+  );
+  const second = onSnapshot(q2, (snapshot) => {
+    const games = snapshot.docs.map((doc) => {
+      let d = doc.data();
+      let opponent = d.opponent === email ? d.user : d.opponent;
+      return { ...d, id: doc.id, opponent };
+    });
+    callbackOpp(games);
+  });
+  return () => {
+    first();
+    second();
+  };
 }
 
 export async function newGame(uid, myEmail, opponentEmail) {
   if (await emailExists(opponentEmail)) {
-    const q = query(
+    let q = query(
       collection(db, "games"),
-      where("users", "array-contains-any", [myEmail, opponentEmail]),
+      // where("users", "array-contains-any", [myEmail, opponentEmail]),
+      // where("users." + myEmail, "==", true),
+      // where("users." + opponentEmail, "==", true),
+      where("user", "==", myEmail),
+      where("opponent", "==", opponentEmail),
       where("status", "!=", status.complete)
     );
-    const qr = await getDocs(q);
+    let qr = await getDocs(q);
+    if (qr.empty) {
+      q = query(
+        collection(db, "games"),
+        // where("users", "array-contains-any", [myEmail, opponentEmail]),
+        // where("users." + myEmail, "==", true),
+        // where("users." + opponentEmail, "==", true),
+        where("opponent", "==", myEmail),
+        where("user", "==", opponentEmail),
+        where("status", "!=", status.complete)
+      );
+    }
+    qr = await getDocs(q);
     if (qr.empty) {
       const game = {
         board: ["", "", "", "", "", "", "", "", ""],
         status: status.waiting_user,
-        users: [myEmail, opponentEmail],
+        // users: { myEmail: true, opponentEmail: true },
+        // users: [myEmail, opponentEmail],
+        user: myEmail,
+        opponent: opponentEmail,
         updatedAt: serverTimestamp(),
         createdAt: serverTimestamp(),
-        owner: uid,
+        owner: myEmail,
       };
       return (await addDoc(collection(db, "games"), game)).id;
     } else {
@@ -102,8 +138,9 @@ export async function newGame(uid, myEmail, opponentEmail) {
 export function getGameSnapshot(gameId, email, callback) {
   return onSnapshot(doc(db, "games", gameId), (snapshot) => {
     let d = snapshot.data();
-    let opponent = d.users.filter((u) => u !== email)[0];
-    callback({ ...d, id: snapshot.id, opponent });
+    // let opponent = d.users.filter((u) => u !== email)[0];
+    if (d.opponent === email) d.opponent = d.user;
+    callback({ ...d, id: snapshot.id });
   });
 }
 

@@ -39,9 +39,9 @@ export default function GameCard({ game }) {
   }, [game.opponent]);
 
   const getStatus = () => {
-    if (game.status === status.new && game.owner === currentUser.uid)
+    if (game.status === status.new && game.owner === currentUser.email)
       return <div>It's your turn to play now.</div>;
-    else if (game.status === status.new && game.owner !== currentUser.uid)
+    else if (game.status === status.new && game.owner !== currentUser.email)
       return (
         <>
           <div>{opponent} created game.</div>
@@ -58,9 +58,9 @@ export default function GameCard({ game }) {
       <div className="card-body">
         {game.status === status.complete || game.status === status.new ? (
           getStatus()
-        ) : (game.owner === currentUser.uid &&
+        ) : (game.owner === currentUser.email &&
             game.status === status.waiting_user) ||
-          (game.owner !== currentUser.uid &&
+          (game.owner !== currentUser.email &&
             game.status === status.waiting_opponent) ? (
           <>
             <div>{opponent} just made their move!</div>

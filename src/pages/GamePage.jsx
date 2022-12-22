@@ -45,7 +45,8 @@ export default function GamePage() {
         newBoardValues[a] === newBoardValues[b] &&
         newBoardValues[a] === newBoardValues[c]
       ) {
-        if (newBoardValues[a] === "X") return true;
+        if (newBoardValues[a] === "X" && currentUser.email === owner)
+          return true;
         else return false;
       }
     }
@@ -53,7 +54,7 @@ export default function GamePage() {
   };
   const handleClick = (index) => {
     const newBoard = [...board];
-    if (currentUser.uid === owner) newBoard[index] = "X";
+    if (currentUser.email === owner) newBoard[index] = "X";
     else newBoard[index] = "O";
     setNewBoardValues(newBoard);
   };
@@ -68,10 +69,10 @@ export default function GamePage() {
       navigate("/new-game/" + opponentEmail);
       return;
     }
-    if (owner === currentUser.uid)
+    const stat = checkWin();
+    if (owner === currentUser.email)
       updateBoard(gameid, newBoardValues, status.waiting_opponent);
     else updateBoard(gameid, newBoardValues, status.waiting_user);
-    const stat = checkWin();
     if (stat !== null) {
       if (stat) updateStatus(gameid, status.complete, currentUser.email);
       else updateStatus(gameid, status.complete, opponentEmail);
@@ -100,12 +101,12 @@ export default function GamePage() {
         else setWinStatus("Draw!");
       }
       if (
-        game.owner === currentUser.uid &&
+        game.owner === currentUser.email &&
         game.status === status.waiting_user
       ) {
         setDisabled(false);
       } else if (
-        game.owner !== currentUser.uid &&
+        game.owner !== currentUser.email &&
         game.status === status.waiting_opponent
       ) {
         setDisabled(false);
@@ -114,7 +115,7 @@ export default function GamePage() {
       }
     });
     return unsubscribe;
-  }, [currentUser.uid, gameid]);
+  }, [currentUser.email, gameid]);
 
   return (
     <>
@@ -134,7 +135,7 @@ export default function GamePage() {
               {board && (
                 <GameBoard
                   board={newBoardValues}
-                  xOwner={owner === currentUser.uid}
+                  xOwner={owner === currentUser.email}
                   handleClick={!disabled ? handleClick : null}
                   disabled={disabled}
                 />
