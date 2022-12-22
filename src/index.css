@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Bilbo";
-  src: url(assets/Bilbo-Regular.ttf);
+  src: url(assets/Bilbo-Regular.woff2);
 }
 
 body {
@@ -28,4 +28,17 @@ code {
 
 .text-white {
   font-weight: 600;
+}
+
+.new-game-btn {
+  position: fixed;
+  z-index: 999;
+  right: 20px;
+  font-size: 24px;
+  bottom: 20px;
+  background-color: #270f36;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }

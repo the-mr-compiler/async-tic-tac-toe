@@ -1,25 +1,25 @@
 import React from "react";
-import propTypes from "prop-types";
+
+import oIcon from "../assets/O.svg";
+import xIcon from "../assets/X.svg";
+
 import "./GameBoard.css";
-export default function GameBoard({ squares, handleClick, disabled }) {
+export default function GameBoard({ board, handleClick, disabled }) {
   return (
     <div className="board">
-      {squares.map((square, index) => (
+      {board.map((square, index) => (
         <button
-          onClick={square !== "" ? null : () => handleClick(index)}
-          className={
-            "btn btn-light rounded-0 square font-bilbo fw-bolder " +
-            (square === "X" ? "text-primary" : "text-danger")
-          }
+          key={"square" + index}
+          onClick={square !== "" || disabled ? null : () => handleClick(index)}
+          className={"btn btn-light rounded-0 square"}
         >
-          {square}
+          {square === "X" ? (
+            <img src={xIcon} alt="X" />
+          ) : square === "O" ? (
+            <img src={oIcon} alt="O" />
+          ) : null}
         </button>
       ))}
     </div>
   );
 }
-
-GameBoard.propTypes = {
-  squares: propTypes.arrayOf(propTypes.string).isRequired,
-  handleClick: propTypes.func.isRequired,
-};
